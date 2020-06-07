@@ -7,6 +7,6 @@ class Main {
         System.out.println("Hello world");
         System.out.println("Pi=3.1415927");
         System.out.println("Sum = "+sum);
-        System.out.println("Chnage");
+        System.out.println("Change");
     }
 }
