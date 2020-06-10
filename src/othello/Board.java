@@ -1,6 +1,8 @@
 package othello;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
     char board[][];
     int WPoints, BPoints, FreePoints;
 
@@ -15,6 +17,18 @@ public class Board {
                 {'_', '_', '_', '_', '_', '_', '_', '_',},
                 {'_', '_', '_', '_', '_', '_', '_', '_',}};
 
+    }
+
+    public Board(char player1, char player2){
+        board = new char[][]{
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', player1, player2, '_', '_', '_',},
+                {'_', '_', '_', player2, player1, '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',}};
     }
 
     public void printBoard() {
@@ -47,6 +61,12 @@ public class Board {
                    FreePoints++;
             }
         }
+    }
+    public void printScore()
+    {
+        System.out.println("Score :");
+        System.out.println("Player 0 : " + WPoints);
+        System.out.println("Player 1 : " + BPoints);
     }
 
 }
