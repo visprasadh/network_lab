@@ -32,20 +32,19 @@ public class Board {
         }
     }
     
-    public void updatePoints()
-    {   int WPoints=0; 
-        int BPoints=0; 
-        int FreePoints= 0;
+    public int[] updatePoints()
+    {   int points[] = new int[3];
         for(int i=0;i<8;++i)
         {   for(int j=0;j<8;++j)
             {   if(board[i][j]=='0')
-                   WPoints++;
+                   points[0]++;
                 else if(board[i][j]=='1')
-                   BPoints++;
+                   points[1]++;
                 else 
-                   FreePoints++;
+                   points[2]++;
             }
         }
+        return points;
     }
 
 }
