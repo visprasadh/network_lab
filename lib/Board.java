@@ -1,8 +1,8 @@
 package lib;
 
-public class Othello 
+public class Board 
 {   
-    public void create_board()
+    public Board()
     {   char board[][] = new char[][]{
         {'_','_','_','_','_','_','_','_',},
         {'_','_','_','_','_','_','_','_',},
