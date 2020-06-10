@@ -158,7 +158,8 @@ class BoardOperations
         }
 
         if(!isCapturable)
-            board.board[i][j]='_';
+            board.board[x][y]='_';
+
         return isCapturable;
        //Change occurs in both variables i and j only in diagonal directions
     }  
