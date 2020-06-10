@@ -19,6 +19,18 @@ public class Board implements Serializable {
 
     }
 
+    public Board(char player1, char player2){
+        board = new char[][]{
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', player1, player2, '_', '_', '_',},
+                {'_', '_', '_', player2, player1, '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',},
+                {'_', '_', '_', '_', '_', '_', '_', '_',}};
+    }
+
     public void printBoard() {
         System.out.print("  ");
         for (int i = 0; i < 8; i++) {

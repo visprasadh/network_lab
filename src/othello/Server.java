@@ -13,79 +13,85 @@ class Server {
         Socket s1 = ss.accept();
         System.out.println("Player 1 Connected !!");
 
-//        Socket s2 = ss.accept();
-//        System.out.println("Player 2 Connected !!");
+        Socket s2 = ss.accept();
+        System.out.println("Player 2 Connected !!");
 
         // to send data to the client
         PrintStream ps1 = new PrintStream(s1.getOutputStream());
-//        PrintStream ps2 = new PrintStream(s2.getOutputStream());
+        PrintStream ps2 = new PrintStream(s2.getOutputStream());
+
         ObjectOutputStream os1 = new ObjectOutputStream((s1.getOutputStream()));
-//        ObjectOutputStream os2 = new ObjectOutputStream(s2.getOutputStream());
+        ObjectOutputStream os2 = new ObjectOutputStream(s2.getOutputStream());
+
+        ObjectInputStream is1 = new ObjectInputStream(s1.getInputStream());
+        ObjectInputStream is2 = new ObjectInputStream(s2.getInputStream());
 
         // to read data coming from the client
         BufferedReader br1 = new BufferedReader(new InputStreamReader(s1.getInputStream()));
-//        BufferedReader br2 = new BufferedReader(new InputStreamReader(s2.getInputStream()));
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(s2.getInputStream()));
+
+        char player[] = new char[2];
+        player[0] = '0';
+        player[1] = '1';
+        Board board = new Board(player[0],player[1]);
+
+        int turn = 0;
+        Input input;
+
+        ps1.println("You are Player 0");
+        ps2.println("You are Player 1");
 
         // server executes continuously
-//        while (true) {
-
-            Board board = new Board();
-
-            try{
-
-            os1.writeObject(board);
-            }
-            catch (Exception e)
+        while (true) {
+            System.out.println("inside while");
+            if(turn == 0)
             {
-                e.printStackTrace();
+                System.out.println("inside if");
+                os1.writeObject(board);
+                System.out.println("Board Passed");
+                input = (Input)is1.readObject();
+                boolean isLegal = BoardOperations.isLegal(board, input.row, input.column, player[0],player[1]);
+                if(isLegal)
+                {
+                    ps1.println("Waiting for your Opponent to play !!");
+                    board.updatePoints();
+                    turn = 1;
+                }
+                else
+                {
+                    ps1.println("Illegal move, Try Again !!");
+                }
             }
-            ps1.println("Make your Move :");
+            else if(turn == 1 )
+            {
+                System.out.println("Inside Else");
+                os2.writeObject(board);
+                input = (Input)is2.readObject();
+                boolean isLegal = BoardOperations.isLegal(board, input.row, input.column, player[1],player[0]);
+                if(isLegal)
+                {
+                    ps1.println("Waiting for your Opponent to play !!");
+                    board.updatePoints();
+                    turn = 0;
+                }
+                else
+                {
+                    ps1.println("Illegal move, Try Again !!");
+                }
+            }
+        }
 
-
-
-
-
-
-//            String str, str1;
-
-//            while ((str = br.readLine()) != null) {
-//                if(Parity.checkSingleParity(str))
-//                {
-//                    str = str.substring(0,str.length()-1);
-//                    System.out.println(str);
-//                }
-//                else
-//                {
-//                    System.out.println("Error in Received msg !!");
-//                }
-//
-//                str1 = kb.readLine();
-//
-//                // send to client
-//                str1 = Parity.GenSingleParity(str1);
-//                ps.println(str1);
-//            }
-//
-//
-//            ps.close();
-//            br.close();
-//            kb.close();
-//            ss.close();
-//            s.close();
-//
-//            // terminate application
-//            System.exit(0);
-//        } // end of while
-
-        ps1.close();
+//        ps1.close();
 //        ps2.close();
-        s1.close();
+//        s1.close();
 //        s2.close();
-        br1.close();
+//        br1.close();
 //        br2.close();
-        os1.close();
+//        os1.close();
 //        os2.close();
-        ss.close();
+//        is1.close();
+//        is2.close();
+//        ss.close();
 
     }
 }

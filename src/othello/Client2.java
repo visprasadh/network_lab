@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-class Client {
+class Client2 {
 
     public static void main(String args[])
             throws Exception
@@ -32,23 +32,22 @@ class Client {
 
         while(true)
         {
-
             try{
-            board = (Board)is.readObject();
-            System.out.println("Board Read");
-            board.printBoard();
-            System.out.print("Enter the Row : ");
-            input.row = scanner.nextInt();
-            System.out.print("Enter the Column :");
-            input.column = scanner.nextInt();
-            os.writeObject(input);
-            str = br.readLine();
-            System.out.println(str);
+                board = (Board)is.readObject();
+                board.printBoard();
+                System.out.print("Enter the Row : ");
+                input.row = scanner.nextInt();
+                System.out.print("Enter the Column :");
+                input.column = scanner.nextInt();
+                os.writeObject(input);
+                str = br.readLine();
+                System.out.println(str);
             }
             catch (Exception e)
             {
                 e.printStackTrace();
             }
+
         }
 //        dos.close();
 //        br.close();
