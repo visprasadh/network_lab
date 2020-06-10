@@ -6,7 +6,7 @@ class BoardOperations
     {   if(isAlreadyMarked(board, x,y))
             return false;
         else if(isCapturable(board, x,y))
-            return true;
+            return true;                  
 
         return false;
     }
@@ -22,6 +22,8 @@ class BoardOperations
         return true;
     }
 
+
+    //Once we get a legal move, we perform updatePieces() function. But how to find a legal move?
     void updatePieces(Board board,int x, int y, char player, char enemy)
     {
         int i=x,j=y;
