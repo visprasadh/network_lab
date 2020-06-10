@@ -45,10 +45,6 @@ class Server {
         // server executes continuously
         while (true) {
             System.out.println("inside while");
-
-
-
-
             System.out.println("asdfs");
             if(turn == 0)
             {
@@ -90,8 +86,6 @@ class Server {
 //                board = (Board)is2.readObject();
             }
 
-            is1.close();
-            is2.close();
         }
 
 //        ps1.close();
