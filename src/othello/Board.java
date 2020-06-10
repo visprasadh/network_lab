@@ -31,5 +31,21 @@ public class Board {
             System.out.println();
         }
     }
+    
+    public void updatePoints()
+    {   int WPoints=0; 
+        int BPoints=0; 
+        int FreePoints= 0;
+        for(int i=0;i<8;++i)
+        {   for(int j=0;j<8;++j)
+            {   if(board[i][j]=='0')
+                   WPoints++;
+                else if(board[i][j]=='1')
+                   BPoints++;
+                else 
+                   FreePoints++;
+            }
+        }
+    }
 
 }
