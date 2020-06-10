@@ -57,6 +57,12 @@ class Client {
                     System.out.print("Enter Column : ");
                     int col = scanner.nextInt();
 
+                    if(row>7 || col >7)
+                    {
+                        System.out.println("Incorrect Index !! Try Again !!");
+                        continue;
+                    }
+
                     if (BoardOperations.isLegal(board, row, col, '0', '1')) {
                         board.updatePoints();
                         System.out.println("Waiting for opponent to play !!");
