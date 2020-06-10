@@ -51,24 +51,3 @@ public class Board {
 
 }
 
-Board B;
-
-public class SetSomeName   //Give a suitable name for the class
-{   
-    public boolean isLegal(int x,int y)
-    {   if(isAlreadyMarked(x,y))
-           return false;
-        if(isCapturable(x,y))
-           return true;
-    }
-
-    public boolean isAlreadyMarked(int x,int y)
-    {   if(B.board[x][y]!='_')
-           return true;
-    }
-
-    public boolean isCapturable(int x,int y)
-    {
-        //cfgh
-    }
-}
