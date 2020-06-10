@@ -2,6 +2,7 @@ package othello;
 
 import java.io.*;
 import java.net.*;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Server {
@@ -59,17 +60,16 @@ class Server {
             else
             {
                 while (true) {
-                    int row, col;
+                    int row = 9, col = 9;
                     try{
                         System.out.print("Enter Row : ");
                         row = scanner.nextInt();
                         System.out.print("Enter Column : ");
                         col = scanner.nextInt();
                     }
-                    catch (Exception e)
+                    catch (InputMismatchException e)
                     {
-                        e.printStackTrace();
-                        continue;
+                        scanner.next();
                     }
 
 
