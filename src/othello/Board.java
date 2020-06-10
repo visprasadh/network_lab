@@ -62,5 +62,11 @@ public class Board implements Serializable {
             }
         }
     }
+    public void printScore()
+    {
+        System.out.println("Score :");
+        System.out.println("Player 0 : " + WPoints);
+        System.out.println("Player 1 : " + BPoints);
+    }
 
 }

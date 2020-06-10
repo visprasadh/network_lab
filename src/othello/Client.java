@@ -5,56 +5,83 @@ import java.net.*;
 import java.util.Scanner;
 
 class Client {
-
-    public static void main(String args[])
-            throws Exception
-    {
-
-        Socket s = new Socket("localhost", 8888);
-
-        System.out.println("Connected to the Game Server !!");
-
-
-        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
-
-        ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
-        ObjectInputStream is = new ObjectInputStream(s.getInputStream());
-
+    public static void main(String args[]) throws Exception {
         Scanner scanner = new Scanner(System.in);
-//        Input input = new Input(0,0);
-//        Board board;
-//        Board b = (Board)is.readObject();
-//        b.printBoard();
+        DatagramSocket socket = new DatagramSocket(5001);
+        InetAddress IPAddress = InetAddress.getByName("localhost");
 
-        String str = br.readLine();
-        System.out.println(str);
+        byte[] incomingData = new byte[1024];
+        Board board = new Board();
 
-        while(true)
-        {
+        System.out.println("Your character : " +"0");
 
-            System.out.println("....");
-            Board board = (Board)is.readObject();
-            System.out.println("Board Read");
+        while(true){
             board.printBoard();
-            System.out.print("Enter the Row : ");
-            int row = scanner.nextInt();
-            System.out.print("Enter the Column :");
-            int column = scanner.nextInt();
-            Input input = new Input(row, column);
-            os.writeObject(input);
-            os.flush();
-            str = br.readLine();
-            System.out.println(str);
-        }
-//        dos.close();
-//        br.close();
-//        kb.close();
-//        is.close();
-//        os.close();
-//        s.close();
 
+            if(BoardOperations.isOver(board))
+            {
+                System.out.println("Game Over !!");
+                board.printScore();
+
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                os.writeObject(board);
+                byte[] data = outputStream.toByteArray();
+                DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, 5000);
+                socket.send(sendPacket);
+
+                break;
+            }
+            else if(!BoardOperations.isPlayable(board, '0','1')){
+                System.out.println("No Possible moves available. Opponent's turn !!");
+            }
+            else if(!BoardOperations.isPlayable(board, '1','0'))
+            {
+                System.out.println("Game Over !!");
+                board.printScore();
+
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                os.writeObject(board);
+                byte[] data = outputStream.toByteArray();
+                DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, 5000);
+                socket.send(sendPacket);
+
+                break;
+            }
+            else
+            {
+                while (true) {
+                    System.out.print("Enter Row : ");
+                    int row = scanner.nextInt();
+                    System.out.print("Enter Column : ");
+                    int col = scanner.nextInt();
+
+                    if (BoardOperations.isLegal(board, row, col, '0', '1')) {
+                        board.updatePoints();
+                        System.out.println("Waiting for opponent to play !!");
+                        break;
+                    }
+                    else
+                    {
+                        System.out.println("Illegal Move, Try Again !!");
+                    }
+                }
+
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                os.writeObject(board);
+                byte[] data = outputStream.toByteArray();
+                DatagramPacket sendPacket = new DatagramPacket(data, data.length, IPAddress, 5000);
+                socket.send(sendPacket);
+
+                DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
+                socket.receive(incomingPacket);
+                data = incomingPacket.getData();
+                ByteArrayInputStream in = new ByteArrayInputStream(data);
+                ObjectInputStream is = new ObjectInputStream(in);
+                board = (Board) is.readObject();
+            }
+        }
     }
 }
-
