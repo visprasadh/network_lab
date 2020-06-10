@@ -2,10 +2,12 @@ package othello;
 
 class BoardOperations
 {
-    static boolean isLegal(Board board,int x,int y)
+    //isLegal function check whether the move is legal and updates the board if a legal move is performed.
+    
+    static boolean isLegal(Board board,int x,int y, char player, char enemy)
     {   if(isAlreadyMarked(board, x,y))
             return false;
-        else if(isCapturable(board, x,y))
+        else if(isCapturable(board, x,y, player, enemy))
             return true;                  
 
         return false;
@@ -17,17 +19,17 @@ class BoardOperations
         return true;
     }
 
-    static boolean isCapturable(Board board, int x,int y)
+    static boolean isCapturable(Board board, int x,int y, char player, char enemy)
     {
-        return true;
+
+        return updatePieces(board,x,y,player,enemy);
     }
 
-
-    //Once we get a legal move, we perform updatePieces() function. But how to find a legal move?
-    void updatePieces(Board board,int x, int y, char player, char enemy)
+    static boolean updatePieces(Board board,int x, int y, char player, char enemy)
     {
         int i=x,j=y;
-        board.board[i][j]=player; 
+        board.board[i][j]=player;
+        boolean isCapturable = false;
               
         //CHECKING ELEMENT AND UPDATING ALONG NORTH-WEST DIRECTION
         if(board.board[i-1][j-1]==enemy&&i-1>=0&&j-1>=0)
@@ -37,7 +39,9 @@ class BoardOperations
                 j--;
             }
             if(board.board[i][j]==player&&i>=0&&j>=0)
-            {   while(i!=x-1 && j!=y-1)
+            {   if(i<x)
+                    isCapturable = true;
+                while(i!=x-1 && j!=y-1)
                     board.board[++i][++j]=player;
             }
         } 
@@ -49,8 +53,10 @@ class BoardOperations
             while(board.board[i][j]==enemy&&j>0)
             {    j--;
             }
-            if(board.board[i][j]==player&&j>=0) 
-            {   while(j!=y-1)
+            if(board.board[i][j]==player&&j>=0)
+            {   if(j<y)
+                    isCapturable = true;
+                while(j!=y-1)
                     board.board[i][++j]=player;
             }
         }
@@ -65,7 +71,9 @@ class BoardOperations
                 j--;
             }
             if(board.board[i][j]==player&&i<=7&&j>=0) 
-            {   while(i!=x+1&&j!=y-1)
+            {   if(j<y)
+                    isCapturable=true;
+                while(i!=x+1&&j!=y-1)
                     board.board[--i][++j] = player;
             }
         }
@@ -78,7 +86,9 @@ class BoardOperations
             {    i--;
             }
             if(board.board[i][j]==player&&i>=0) 
-            {   while(i!=x-1)
+            {   if(i<x)
+                    isCapturable = true;
+                while(i!=x-1)
                     board.board[++i][j]=player;
             }
         } 
@@ -91,8 +101,11 @@ class BoardOperations
             {    i++;
             }
             if(board.board[i][j]==player&&i<=7) 
-            {   while(i!=x+1)
-                    board.board[--i][j]=player;}
+            {   if(i>x)
+                    isCapturable = true;
+                while(i!=x+1)
+                    board.board[--i][j]=player;
+            }
         }
         
         //CHECKING ELEMENT AND UPDATING ALONG SOUTH-WEST DIRECTION
@@ -105,7 +118,9 @@ class BoardOperations
                 j++;
             }
             if(board.board[i][j]==player&&i>=0&&j<=7)
-            {   while(i!=x-1 && j!=y+1)
+            {   if(i<x)
+                    isCapturable = true;
+                while(i!=x-1 && j!=y+1)
                      board.board[++i][--j]=player;
             }
         }   
@@ -118,7 +133,10 @@ class BoardOperations
             {   j++;
             }
             if(board.board[i][j]==player&&j<=7) 
-            {   while(j!=y+1)
+            {   if(j>y)
+                    isCapturable = true;
+
+                while(j!=y+1)
                     board.board[i][--j] = player;
             }
         }
@@ -133,11 +151,14 @@ class BoardOperations
                 j++;
             }
             if(board.board[i][j]==player&&i<=7&&j<=7)
-            {   while(i!=x+1&&j!=y+1) 
+            {   if(i>x)
+                    isCapturable = true;
+                while(i!=x+1&&j!=y+1)
                     board.board[--i][--j]=player;
             }
         }
- 
+
+        return isCapturable;
        //Change occurs in both variables i and j only in diagonal directions
     }  
     
