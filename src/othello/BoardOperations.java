@@ -3,7 +3,7 @@ package othello;
 class BoardOperations
 {
     //isLegal function check whether the move is legal and updates the board if a legal move is performed.
-    
+
     static boolean isLegal(Board board,int x,int y, char player, char enemy)
     {   if(isAlreadyMarked(board, x,y))
             return false;
@@ -21,7 +21,6 @@ class BoardOperations
 
     static boolean isCapturable(Board board, int x,int y, char player, char enemy)
     {
-
         return updatePieces(board,x,y,player,enemy);
     }
 
@@ -32,13 +31,13 @@ class BoardOperations
         boolean isCapturable = false;
               
         //CHECKING ELEMENT AND UPDATING ALONG NORTH-WEST DIRECTION
-        if(board.board[i-1][j-1]==enemy&&i-1>=0&&j-1>=0)
+        if(i-1>=0&&j-1>=0&&board.board[i-1][j-1]==enemy)
         {   i--;j--;
-            while(board.board[i][j]==enemy&&i>0&&j>0)
+            while(i>0&&j>0&&board.board[i][j]==enemy)
             {   i--;
                 j--;
             }
-            if(board.board[i][j]==player&&i>=0&&j>=0)
+            if(i>=0&&j>=0&&board.board[i][j]==player)
             {   if(i<x)
                     isCapturable = true;
                 while(i!=x-1 && j!=y-1)
@@ -48,12 +47,12 @@ class BoardOperations
         
         //CHECKING ELEMENT AND UPDATING ALONG NORTH DIRECTION 
         i=x;j=y; //Reassigning variables since i and j might have changed in the first block of updating.
-        if(board.board[i][j-1]==enemy&&j-1>=0)
+        if(j-1>=0&&board.board[i][j-1]==enemy)
         {   j--;
             while(board.board[i][j]==enemy&&j>0)
             {    j--;
             }
-            if(board.board[i][j]==player&&j>=0)
+            if(j>=0&&board.board[i][j]==player)
             {   if(j<y)
                     isCapturable = true;
                 while(j!=y-1)
@@ -63,14 +62,14 @@ class BoardOperations
 
         //CHECKING ELEMENT AND UPDATING ALONG NORTH-EAST DIRECTION
         i=x;j=y; 
-        if(board.board[i+1][j-1]==enemy&&i+1<=7&&j-1>=0)
+        if(i+1<=7&&j-1>=0 && board.board[i+1][j-1]==enemy)
         {   i++;
             j--;
-            while(board.board[i][j]==enemy&&i<7&&j>0)
+            while(i<7&&j>0 && board.board[i][j]==enemy)
             {   i++;
                 j--;
             }
-            if(board.board[i][j]==player&&i<=7&&j>=0) 
+            if(i<=7&&j>=0 && board.board[i][j]==player)
             {   if(j<y)
                     isCapturable=true;
                 while(i!=x+1&&j!=y-1)
@@ -80,12 +79,12 @@ class BoardOperations
 
         //CHECKING ELEMENT AND UPDATING ALONG WEST DIRECTION
         i=x;j=y; 
-        if(board.board[i-1][j]==enemy&&i-1>=0)
+        if(i-1>=0 && board.board[i-1][j]==enemy)
         {   i--;
-            while(board.board[i][j]==enemy&&i>0) 
+            while(i>0 && board.board[i][j]==enemy) 
             {    i--;
             }
-            if(board.board[i][j]==player&&i>=0) 
+            if(i>=0 && board.board[i][j]==player)
             {   if(i<x)
                     isCapturable = true;
                 while(i!=x-1)
@@ -95,12 +94,12 @@ class BoardOperations
 
         //CHECKING ELEMENT AND UPDATING ACROSS EAST DIRECTION
         i=x;j=y; 
-        if(board.board[i+1][j]==enemy&&i+1<=7)
+        if(i+1<=7 && board.board[i+1][j]==enemy)
         {   i++;
-            while(board.board[i][j]==enemy&&i<7) 
+            while(i<7 && board.board[i][j]==enemy) 
             {    i++;
             }
-            if(board.board[i][j]==player&&i<=7) 
+            if(i<=7 && board.board[i][j]==player) 
             {   if(i>x)
                     isCapturable = true;
                 while(i!=x+1)
@@ -110,14 +109,14 @@ class BoardOperations
         
         //CHECKING ELEMENT AND UPDATING ALONG SOUTH-WEST DIRECTION
         i=x;j=y; 
-        if(board.board[i-1][j+1]==enemy&&i-1>=0&&j+1<=7)
+        if(i-1>=0&&j+1<=7 && board.board[i-1][j+1]==enemy)
         {   i--;
             j++;
-            while(board.board[i][j]==enemy&&i>0&&j<7)
+            while(i>0&&j<7 && board.board[i][j]==enemy)
             {   i--;
                 j++;
             }
-            if(board.board[i][j]==player&&i>=0&&j<=7)
+            if(i>=0&&j<=7 && board.board[i][j]==player)
             {   if(i<x)
                     isCapturable = true;
                 while(i!=x-1 && j!=y+1)
@@ -127,12 +126,12 @@ class BoardOperations
 
         //CHECKING ELEMENT AND UPDATING ALONG SOUTH DIRECTION        
         i=x;j=y; 
-        if(board.board[i][j+1]==enemy&&j+1<=7)
+        if(j+1<=7 && board.board[i][j+1]==enemy)
         {  j++;
-            while(board.board[i][j]==enemy&&j<7)
+            while(j<7 && board.board[i][j]==enemy)
             {   j++;
             }
-            if(board.board[i][j]==player&&j<=7) 
+            if(j<=7 && board.board[i][j]==player) 
             {   if(j>y)
                     isCapturable = true;
 
@@ -143,14 +142,14 @@ class BoardOperations
 
         //CHECKING ELEMENT AND UPDATING ALONG SOUTH-EAST DIRECTION
         i=x;j=y;
-        if(board.board[i+1][j+1]==enemy&&i+1<=7&&j+1<=7)
+        if(i+1<=7&&j+1<=7 && board.board[i+1][j+1]==enemy)
         {   i++;
             j++;
-            while(board.board[i][j]==enemy&&i<7&&j<7)
+            while(i<7&&j<7 && board.board[i][j]==enemy)
             {   i++;
                 j++;
             }
-            if(board.board[i][j]==player&&i<=7&&j<=7)
+            if(i<=7&&j<=7 && board.board[i][j]==player)
             {   if(i>x)
                     isCapturable = true;
                 while(i!=x+1&&j!=y+1)
