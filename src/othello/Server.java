@@ -20,15 +20,17 @@ class Server {
         PrintStream ps1 = new PrintStream(s1.getOutputStream());
         PrintStream ps2 = new PrintStream(s2.getOutputStream());
 
+
+
+        // to read data coming from the client
+        BufferedReader br1 = new BufferedReader(new InputStreamReader(s1.getInputStream()));
+        BufferedReader br2 = new BufferedReader(new InputStreamReader(s2.getInputStream()));
+
         ObjectOutputStream os1 = new ObjectOutputStream((s1.getOutputStream()));
         ObjectOutputStream os2 = new ObjectOutputStream(s2.getOutputStream());
 
         ObjectInputStream is1 = new ObjectInputStream(s1.getInputStream());
         ObjectInputStream is2 = new ObjectInputStream(s2.getInputStream());
-
-        // to read data coming from the client
-        BufferedReader br1 = new BufferedReader(new InputStreamReader(s1.getInputStream()));
-        BufferedReader br2 = new BufferedReader(new InputStreamReader(s2.getInputStream()));
 
         char player[] = new char[2];
         player[0] = '0';
@@ -36,7 +38,6 @@ class Server {
         Board board = new Board(player[0],player[1]);
 
         int turn = 0;
-        Input input;
 
         ps1.println("You are Player 0");
         ps2.println("You are Player 1");
@@ -44,12 +45,19 @@ class Server {
         // server executes continuously
         while (true) {
             System.out.println("inside while");
+
+
+
+
+            System.out.println("asdfs");
             if(turn == 0)
             {
                 System.out.println("inside if");
                 os1.writeObject(board);
+                os1.flush();
                 System.out.println("Board Passed");
-                input = (Input)is1.readObject();
+                Input input = (Input)is1.readObject();
+                System.out.println(input.row +" "+input.column);
                 boolean isLegal = BoardOperations.isLegal(board, input.row, input.column, player[0],player[1]);
                 if(isLegal)
                 {
@@ -61,12 +69,13 @@ class Server {
                 {
                     ps1.println("Illegal move, Try Again !!");
                 }
+//                board = (Board) is1.readObject();
             }
             else if(turn == 1 )
             {
                 System.out.println("Inside Else");
                 os2.writeObject(board);
-                input = (Input)is2.readObject();
+                Input input = (Input)is2.readObject();
                 boolean isLegal = BoardOperations.isLegal(board, input.row, input.column, player[1],player[0]);
                 if(isLegal)
                 {
@@ -78,7 +87,11 @@ class Server {
                 {
                     ps1.println("Illegal move, Try Again !!");
                 }
+//                board = (Board)is2.readObject();
             }
+
+            is1.close();
+            is2.close();
         }
 
 //        ps1.close();
