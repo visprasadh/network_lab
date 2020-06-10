@@ -45,8 +45,7 @@ class Client2 {
                 os.flush();
                 str = br.readLine();
                 System.out.println(str);
-                os.writeObject(board);
-                os.flush();
+
         }
 //        dos.close();
 //        br.close();
