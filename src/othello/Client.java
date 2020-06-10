@@ -52,10 +52,17 @@ class Client {
             else
             {
                 while (true) {
-                    System.out.print("Enter Row : ");
-                    int row = scanner.nextInt();
-                    System.out.print("Enter Column : ");
-                    int col = scanner.nextInt();
+                    try{
+                        System.out.print("Enter Row : ");
+                        int row = scanner.nextInt();
+                        System.out.print("Enter Column : ");
+                        int col = scanner.nextInt();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
 
                     if(row>7 || col >7)
                     {

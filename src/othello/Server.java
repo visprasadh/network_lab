@@ -59,17 +59,24 @@ class Server {
             else
             {
                 while (true) {
-                    System.out.print("Enter Row : ");
-                    int row = scanner.nextInt();
-                    System.out.print("Enter Column :");
-                    int col = scanner.nextInt();
+                    try{
+                        System.out.print("Enter Row : ");
+                        int row = scanner.nextInt();
+                        System.out.print("Enter Column : ");
+                        int col = scanner.nextInt();
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
 
                     if(row>7 || col >7)
                     {
                         System.out.println("Incorrect Index !! Try Again !!");
                         continue;
                     }
-                    
+
                     if (BoardOperations.isLegal(board, row, col, '1', '0')) {
                         board.updatePoints();
                         System.out.println("Waiting for opponent to play !!");
