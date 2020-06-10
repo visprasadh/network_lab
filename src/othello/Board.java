@@ -2,6 +2,7 @@ package othello;
 
 public class Board {
     char board[][];
+    int WPoints, BPoints, FreePoints;
 
     public Board() {
         board = new char[][]{
@@ -33,9 +34,9 @@ public class Board {
     }
     
     public void updatePoints()
-    {   int WPoints=0; 
-        int BPoints=0; 
-        int FreePoints= 0;
+    {   WPoints=0; 
+        BPoints=0; 
+        FreePoints= 0;
         for(int i=0;i<8;++i)
         {   for(int j=0;j<8;++j)
             {   if(board[i][j]=='0')
