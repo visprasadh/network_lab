@@ -59,15 +59,17 @@ class Server {
             else
             {
                 while (true) {
+                    int row, col;
                     try{
                         System.out.print("Enter Row : ");
-                        int row = scanner.nextInt();
+                        row = scanner.nextInt();
                         System.out.print("Enter Column : ");
-                        int col = scanner.nextInt();
+                        col = scanner.nextInt();
                     }
                     catch (Exception e)
                     {
                         e.printStackTrace();
+                        continue;
                     }
 
 
